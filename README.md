@@ -1,20 +1,20 @@
-# Lagerstatus-overvåker for Nettbutikker
+# Lagerstatus-overvåker for nettbutikker
 
-## 🛒 Introduksjon
+## Introduksjon
 
-Python-skript som automatisk overvåker lagerstatus for spesifikke produkter hos nettbutikker. Ved endringer i lagerstatus sendes det ut en e-postvarsling til angitt adresse. Skriptet benytter `Selenium` for nettskraping og `smtplib` for e-postvarsling.
-
----
-
-## 🚀 Funksjoner
-
-- 🔍 Overvåker lagerstatus for spesifikke produkter
-- 📧 Sender e-postvarsling ved endringer
-- 📊 Logger tidligere statuser i en CSV-fil
+Python-skript som automatisk overvåker HTML-elementer (for eksempel lagerstatus i en nettbutikk). Når elementets innhold endres, sendes det ut en e-postvarsling til angitt adresse. Skriptet benytter `selenium` for webscraping og `smtplib` for e-postvarsling.
 
 ---
 
-## 📦 Krav
+## Funksjoner
+
+-  Overvåker HTML-elementer
+-  Sender e-postvarsling ved endringer
+-  Logger tidligere statuser i en CSV-fil
+
+---
+
+##  Krav
 
 - Python 3.7 eller nyere
 - [selenium](https://pypi.org/project/selenium/)
@@ -23,15 +23,15 @@ Python-skript som automatisk overvåker lagerstatus for spesifikke produkter hos
 
 ---
 
-## ⚙️ Installasjon
+##  Installasjon
 
-Installer moduler:
+Installer nødvendige moduler:
 
     pip install selenium webdriver-manager
 
-## 🔧 Konfigurasjon
+##  Konfigurasjon
 
-Produkter defineres i listen produkter:
+Produkter defineres i en liste som JSON-objekter:
 
     {
         "butikk": "Norli",
@@ -46,15 +46,14 @@ Produkter defineres i listen produkter:
 
 **E-postinnstillinger**
 
-E-post kan sendes til og fra samme adresse.
-
+E-post kan sendes til og fra samme adresse:
 
     mottaker = "example@gmail.com"
     avsender = "example@gmail.com"
-    passord = "******"
-👉 Opprett app-passord her: https://myaccount.google.com/apppasswords
+    passord = "******" #NB: app passord (ikke brukerpassord)
+ Opprett app-passord her: https://myaccount.google.com/apppasswords
 
-## 📅 Automatisering
+##  Automatisering
 Skriptet kan kjøres automatisk ved hjelp av:
 
 - macOS/Linux: `cron`
@@ -64,12 +63,11 @@ Eksempel med cron (kjører hver time) med .log-fil:
 
     0 * * * * /usr/bin/python3 /sti/til/lagerstatus_overvaker.py >> /sti/til/cron.log 2>&1
 
-## ❗ Feilhåndtering 
-Scriptet sender en e-post ved første forekomst av feilmelding.
+##  Feilhåndtering 
+Scriptet sender e-post ved endring i HTML-element. Dette gjelder også feilmelding.
 
 Vanlige årsaker til feil:
 - Innhold ikke lastet (f.eks. krever scrolling)
 - Endret XPath på nettsiden.
   
-**Tips:** Unngå XPath som div[2]/div[1]/.... Bruk klasser ved hjelp av [@class="..."] når mulig.
-
+**Tips:** Unngå absolutte XPath som div[2]/div[1]/.... Bruk heller klasser som [@class="..."] når mulig.
